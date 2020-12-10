@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 
 public class Game {
+
+// Create player java object to play with more people
     ArrayList players = new ArrayList();
     int[] places = new int[6];
     int[] purses  = new int[6];
@@ -30,11 +32,12 @@ public class Game {
 		return "Rock Question " + index;
 	}
 
+
 	public boolean isPlayable() {
-		return (howManyPlayers() >= 2);
+		return (howManyPlayers() >= 2 &&  howManyPlayers() <= 6);
 	}
 
-	public boolean add(String playerName) {
+	public void add(String playerName) {
 		
 		
 	    players.add(playerName);
@@ -44,7 +47,6 @@ public class Game {
 	    
 	    System.out.println(playerName + " was added");
 	    System.out.println("They are player number " + players.size());
-		return true;
 	}
 	
 	public int howManyPlayers() {
@@ -64,10 +66,9 @@ public class Game {
 			} else {
 				System.out.println(players.get(currentPlayer) + " is not getting out of the penalty box");
 				isGettingOutOfPenaltyBox = false;
-				}
+			}
 			
 		} else {
-
 			movePlayerAndAskQuestion(roll);
 		}
 		
