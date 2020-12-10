@@ -54,19 +54,22 @@ public class Game {
 	public void roll(int roll) {
 		System.out.println(players.get(currentPlayer) + " is the current player");
 		System.out.println("They have rolled a " + roll);
-		
+
+		//au départ currentPlayer = 0 donc si inPenaltyBox[0] est à true il va rentrer dans la condition
+		// premier lancement ?
 		if (inPenaltyBox[currentPlayer]) {
-			if (roll % 2 != 0) {
-				isGettingOutOfPenaltyBox = true;
+			if (roll % 2 != 0) {// si impair ?
+				isGettingOutOfPenaltyBox = true;// à quoi cela sert-il à ce stade ?
 				
 				System.out.println(players.get(currentPlayer) + " is getting out of the penalty box");
-				movePlayerAndAskQuestion(roll);
-			} else {
+				movePlayerAndAskQuestion(roll);// si imppair -> move player
+			} else {// si pair
 				System.out.println(players.get(currentPlayer) + " is not getting out of the penalty box");
-				isGettingOutOfPenaltyBox = false;
+				isGettingOutOfPenaltyBox = false;// à quoi cela sert-il à ce stade ?
+				// si pair on ne rentre pas dans movePlayerAndAskQuestion
 				}
 			
-		} else {
+		} else {//
 
 			movePlayerAndAskQuestion(roll);
 		}
@@ -74,8 +77,8 @@ public class Game {
 	}
 
 	private void movePlayerAndAskQuestion(int roll) {
-		places[currentPlayer] = places[currentPlayer] + roll;
-		if (places[currentPlayer] > 11) places[currentPlayer] = places[currentPlayer] - 12;
+		places[currentPlayer] = places[currentPlayer] + roll;//valeur par défaut 0 au démarrage + la valeur du dé
+		if (places[currentPlayer] > 11) places[currentPlayer] = places[currentPlayer] - 12; // valeur à > 11 on recule de 12 cases
 
 		System.out.println(players.get(currentPlayer)
                 + "'s new location is "
@@ -85,7 +88,7 @@ public class Game {
 	}
 
 	private void askQuestion() {
-		if (currentCategory() == "Pop")
+		if (currentCategory() == "Pop")// choix de la catégorie selon la valeur de places[index]
 			System.out.println(popQuestions.removeFirst());
 		if (currentCategory() == "Science")
 			System.out.println(scienceQuestions.removeFirst());
@@ -96,7 +99,7 @@ public class Game {
 	}
 	
 	
-	private String currentCategory() {
+	private String currentCategory() {// Un peu d'ordre les amis - le Rock c'est cool
 		if (places[currentPlayer] == 0) return "Pop";
 		if (places[currentPlayer] == 4) return "Pop";
 		if (places[currentPlayer] == 8) return "Pop";
@@ -148,7 +151,7 @@ public class Game {
 			return winner;
 		}
 	}
-	
+	//
 	public boolean wrongAnswer(){
 		System.out.println("Question was incorrectly answered");
 		System.out.println(players.get(currentPlayer)+ " was sent to the penalty box");
