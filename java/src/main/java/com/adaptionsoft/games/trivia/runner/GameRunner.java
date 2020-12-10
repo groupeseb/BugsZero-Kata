@@ -21,20 +21,24 @@ public class GameRunner {
 		aGame.add("Chet");
 		aGame.add("Pat");
 		aGame.add("Sue");
+		aGame.add("Frank");
+		aGame.add("Bob");
+		aGame.add("Pat");
+		aGame.add("Luc");
+		aGame.add("Carl");
 
+		if(aGame.isPlayable()){
+			do {
 
-		do {
+				aGame.roll(rand.nextInt(5) + 1);
 
-			aGame.roll(rand.nextInt(5) + 1);
+				if (rand.nextInt(9) == 7) {
+					notAWinner = aGame.wrongAnswer();
+				} else {
+					notAWinner = aGame.wasCorrectlyAnswered();
+				}
+			} while (notAWinner);
+		}
 
-			if (rand.nextInt(9) == 7) {
-				notAWinner = aGame.wrongAnswer();
-			} else {
-				notAWinner = aGame.wasCorrectlyAnswered();
-			}
-
-
-
-		} while (notAWinner);
 	}
 }
