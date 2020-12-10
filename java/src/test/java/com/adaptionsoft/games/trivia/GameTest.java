@@ -1,14 +1,15 @@
-package com.adaptionsoft.games.trivia;
+package test.java.com.adaptionsoft.games.trivia;
 
-import static org.junit.Assert.*;
-
-import com.adaptionsoft.games.trivia.runner.GameRunner;
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
+import java.util.Random;
+import java.util.stream.IntStream;
+import main.java.com.adaptionsoft.games.trivia.runner.GameRunner;
 import org.approvaltests.Approvals;
 import org.junit.Test;
 
-import java.io.*;
-import java.util.Random;
-import java.util.stream.IntStream;
+
+import static org.junit.Assert.*;
 
 public class GameTest {
 

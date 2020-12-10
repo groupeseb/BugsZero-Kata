@@ -1,11 +1,18 @@
-package com.adaptionsoft.games.uglytrivia;
+package main.java.com.adaptionsoft.games.uglytrivia;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
 
 public class Game {
+	// ADD List Type List<String> players = new ArrayList();
     ArrayList players = new ArrayList();
+
+    // ADD public static int MAX_PLAYER_SIZE = ... to initialize "places"
+	//     int[] places = new int[MAX_PLAYER_SIZE];
+    //     int[] purses  = new int[MAX_PLAYER_SIZE];
+	// OR use List<Integer> places = new ArrayList();
     int[] places = new int[6];
+
     int[] purses  = new int[6];
     boolean[] inPenaltyBox  = new boolean[6];
     
@@ -22,14 +29,18 @@ public class Game {
 			popQuestions.addLast("Pop Question " + i);
 			scienceQuestions.addLast(("Science Question " + i));
 			sportsQuestions.addLast(("Sports Question " + i));
+			//Use this method for the others question type (add parameter on this method)
 			rockQuestions.addLast(createRockQuestion(i));
     	}
     }
 
+    // add parameter "String questionType"
 	public String createRockQuestion(int index){
+    	// use String.format(%s %s, questionType, index)
 		return "Rock Question " + index;
 	}
 
+	// unused method
 	public boolean isPlayable() {
 		return (howManyPlayers() >= 2);
 	}
@@ -74,7 +85,9 @@ public class Game {
 	}
 
 	private void movePlayerAndAskQuestion(int roll) {
+    	// We want to move the player only if they gave a correct answer.
 		places[currentPlayer] = places[currentPlayer] + roll;
+		// This feature is not specified on the rules
 		if (places[currentPlayer] > 11) places[currentPlayer] = places[currentPlayer] - 12;
 
 		System.out.println(players.get(currentPlayer)
@@ -86,6 +99,7 @@ public class Game {
 
 	private void askQuestion() {
 		if (currentCategory() == "Pop")
+			// NoSuchElementException exception if no more question
 			System.out.println(popQuestions.removeFirst());
 		if (currentCategory() == "Science")
 			System.out.println(scienceQuestions.removeFirst());
@@ -95,7 +109,8 @@ public class Game {
 			System.out.println(rockQuestions.removeFirst());		
 	}
 	
-	
+
+	// add parameter for the current place
 	private String currentCategory() {
 		if (places[currentPlayer] == 0) return "Pop";
 		if (places[currentPlayer] == 4) return "Pop";
@@ -112,6 +127,7 @@ public class Game {
 	public boolean wasCorrectlyAnswered() {
 		if (inPenaltyBox[currentPlayer]){
 			if (isGettingOutOfPenaltyBox) {
+				// Add Class to stock all the trads
 				System.out.println("Answer was correct!!!!");
 				currentPlayer++;
 				if (currentPlayer == players.size()) currentPlayer = 0;

@@ -1,8 +1,7 @@
-
-package com.adaptionsoft.games.trivia.runner;
+package main.java.com.adaptionsoft.games.trivia.runner;
 import java.util.Random;
 
-import com.adaptionsoft.games.uglytrivia.Game;
+import main.java.com.adaptionsoft.games.uglytrivia.Game;
 
 
 public class GameRunner {
@@ -21,7 +20,8 @@ public class GameRunner {
 		aGame.add("Chet");
 		aGame.add("Pat");
 		aGame.add("Sue");
-
+		aGame.add("Sue2");
+		aGame.add("Sue3");
 
 		do {
 
