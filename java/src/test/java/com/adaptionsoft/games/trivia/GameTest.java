@@ -1,27 +1,27 @@
 package com.adaptionsoft.games.trivia;
 
-import static org.junit.Assert.*;
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
+import java.util.Random;
+import java.util.stream.IntStream;
 
-import com.adaptionsoft.games.trivia.runner.GameRunner;
 import org.approvaltests.Approvals;
 import org.junit.Test;
 
-import java.io.*;
-import java.util.Random;
-import java.util.stream.IntStream;
+import com.adaptionsoft.games.trivia.runner.GameRunner;
 
 public class GameTest {
 
 	@Test
 	public void itsLockedDown() throws Exception {
 
-        Random randomizer = new Random(123455);
-        ByteArrayOutputStream resultStream = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(resultStream));
+		Random randomizer = new Random(123455); // lock seed to have identical results every time.
+		ByteArrayOutputStream resultStream = new ByteArrayOutputStream();
+		System.setOut(new PrintStream(resultStream));
 
-        IntStream.range(1,15).forEach(i -> GameRunner.playGame(randomizer));
+		IntStream.range(1, 15).forEach(i -> GameRunner.playGame(randomizer));
 
-        Approvals.verify(resultStream.toString());
+		Approvals.verify(resultStream.toString());
 
 	}
 }
