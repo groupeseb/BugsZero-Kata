@@ -5,9 +5,9 @@ import java.util.LinkedList;
 
 public class Game {
     ArrayList players = new ArrayList();
-    int[] places = new int[6];
-    int[] purses  = new int[6];
-    boolean[] inPenaltyBox  = new boolean[6];
+    int[] places = new int[6];// il faut changer a 8 si on peut jouer avec 8 joeurs
+    int[] purses  = new int[6];// il faut changer a 8 si on peut jouer avec 8 joeurs
+    boolean[] inPenaltyBox  = new boolean[6]; // il faut changer a 8 si on peut jouer avec 8 joeurs
     
     LinkedList popQuestions = new LinkedList();
     LinkedList scienceQuestions = new LinkedList();
@@ -25,14 +25,14 @@ public class Game {
 			rockQuestions.addLast(createRockQuestion(i));
     	}
     }
-
+   // on peut creer une methode generique ici pour createQuestion
 	public String createRockQuestion(int index){
 		return "Rock Question " + index;
 	}
 
 	public boolean isPlayable() {
 		return (howManyPlayers() >= 2);
-	}
+	} // cette methode n'est pas utiliséé
 
 	public boolean add(String playerName) {
 		
@@ -52,6 +52,8 @@ public class Game {
 	}
 
 	public void roll(int roll) {
+    	// il faut ajouter un check avec isPlayable() ici pour assurer qu'il minimum deux joueurs
+
 		System.out.println(players.get(currentPlayer) + " is the current player");
 		System.out.println("They have rolled a " + roll);
 		
@@ -84,6 +86,9 @@ public class Game {
 		askQuestion();
 	}
 
+
+	// c'est mieux de remplacer les String par des enum ou des constante final
+	//utiliser switch pour remplacer les if
 	private void askQuestion() {
 		if (currentCategory() == "Pop")
 			System.out.println(popQuestions.removeFirst());
@@ -94,8 +99,9 @@ public class Game {
 		if (currentCategory() == "Rock")
 			System.out.println(rockQuestions.removeFirst());		
 	}
-	
-	
+
+	// pareil c'est mieux de remplacer les String par des enum ou des constante final
+	//utiliser switch pour remplacer les if
 	private String currentCategory() {
 		if (places[currentPlayer] == 0) return "Pop";
 		if (places[currentPlayer] == 4) return "Pop";
@@ -112,6 +118,8 @@ public class Game {
 	public boolean wasCorrectlyAnswered() {
 		if (inPenaltyBox[currentPlayer]){
 			if (isGettingOutOfPenaltyBox) {
+
+				//refecto cette partie pour ne pas avoir plusieurs if avec une methode compliquée
 				System.out.println("Answer was correct!!!!");
 				currentPlayer++;
 				if (currentPlayer == players.size()) currentPlayer = 0;
