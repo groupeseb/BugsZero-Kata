@@ -25,5 +25,5 @@ public class GameTest {
 
 	}
 
-	// ajouter un test avec 1 seul joueur
+	// ajouter un test avec 1 seul joueur (test KO)
 }
