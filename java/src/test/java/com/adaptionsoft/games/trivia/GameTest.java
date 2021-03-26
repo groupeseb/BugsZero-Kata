@@ -24,4 +24,6 @@ public class GameTest {
         Approvals.verify(resultStream.toString());
 
 	}
+
+	// ajouter un test avec 1 seul joueur
 }
