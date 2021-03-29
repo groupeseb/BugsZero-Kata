@@ -4,47 +4,57 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 
 public class Game {
-    ArrayList players = new ArrayList();
+    private final ArrayList<String> players = new ArrayList<>();
+
+    // il faut rajouter une vérification sur les joueurs pour éviter un OutOfBoundException si > 6 joueurs
+    private static final int MAX_PLAYERS_NUMBER = 6;
+
     int[] places = new int[6];
     int[] purses  = new int[6];
     boolean[] inPenaltyBox  = new boolean[6];
     
-    LinkedList popQuestions = new LinkedList();
-    LinkedList scienceQuestions = new LinkedList();
-    LinkedList sportsQuestions = new LinkedList();
-    LinkedList rockQuestions = new LinkedList();
+    LinkedList<String> popQuestions = new LinkedList<>();
+    LinkedList<String> scienceQuestions = new LinkedList<>();
+    LinkedList<String> sportsQuestions = new LinkedList<>();
+    LinkedList<String> rockQuestions = new LinkedList<>();
+
+    private static final int NUMBER_OF_TURN = 50;
     
     int currentPlayer = 0;
     boolean isGettingOutOfPenaltyBox;
     
     public  Game(){
-    	for (int i = 0; i < 50; i++) {
-			popQuestions.addLast("Pop Question " + i);
-			scienceQuestions.addLast(("Science Question " + i));
-			sportsQuestions.addLast(("Sports Question " + i));
-			rockQuestions.addLast(createRockQuestion(i));
+    	for (int turnNo = 0; turnNo < NUMBER_OF_TURN; turnNo++) {
+			popQuestions.addLast("Pop Question " + turnNo);
+			scienceQuestions.addLast(("Science Question " + turnNo));
+			sportsQuestions.addLast(("Sports Question " + turnNo));
+			rockQuestions.addLast(createRockQuestion(turnNo));
     	}
     }
 
-	public String createRockQuestion(int index){
+	// soit on fait des méthodes pour chaque type de question, soit on met tout en dur directement dans le constructeur
+	private String createRockQuestion(int index){
 		return "Rock Question " + index;
 	}
 
 	public boolean isPlayable() {
+    	// peut-être rajouté un contrôle pour vérifier qu'il reste des questions dans les listes ?
 		return (howManyPlayers() >= 2);
 	}
 
-	public boolean add(String playerName) {
-		
-		
+	// je n'ai pas l'impression qu'on ai besoin du retour
+	public void add(String playerName) {
+
+    	// rajouter vérification nombre de joueurs, si > MAX alors exception
 	    players.add(playerName);
-	    places[howManyPlayers()] = 0;
-	    purses[howManyPlayers()] = 0;
-	    inPenaltyBox[howManyPlayers()] = false;
+
+	    int playerNo = howManyPlayers();
+
+	    places[playerNo] = 0;
+	    purses[playerNo] = 0;
+	    inPenaltyBox[playerNo] = false;
 	    
-	    System.out.println(playerName + " was added");
-	    System.out.println("They are player number " + players.size());
-		return true;
+	    System.out.println(playerName + " was added. He is player " + playerNo);
 	}
 	
 	public int howManyPlayers() {
@@ -52,19 +62,27 @@ public class Game {
 	}
 
 	public void roll(int roll) {
-		System.out.println(players.get(currentPlayer) + " is the current player");
+    	if(!isPlayable()) {
+    		// pour bien faire il faudrait faire une exception custom
+    		throw new RuntimeException("Not enough players");
+		}
+
+    	String currentPlayerName = players.get(currentPlayer);
+		System.out.println(currentPlayerName + " is the current player");
 		System.out.println("They have rolled a " + roll);
 		
 		if (inPenaltyBox[currentPlayer]) {
+
+			// peut-êre découper cette partie dans une sous fonction handlePenaltyBox
 			if (roll % 2 != 0) {
 				isGettingOutOfPenaltyBox = true;
 				
-				System.out.println(players.get(currentPlayer) + " is getting out of the penalty box");
+				System.out.println(currentPlayerName + " is getting out of the penalty box");
 				movePlayerAndAskQuestion(roll);
 			} else {
-				System.out.println(players.get(currentPlayer) + " is not getting out of the penalty box");
+				System.out.println(currentPlayerName + " is not getting out of the penalty box");
 				isGettingOutOfPenaltyBox = false;
-				}
+			}
 			
 		} else {
 
@@ -74,8 +92,18 @@ public class Game {
 	}
 
 	private void movePlayerAndAskQuestion(int roll) {
+
+    	// algo assez compliqué à suivre, il faudrait faire des constantes ou des commentaires
+
+		// déplace le joueur du résultat du dés
 		places[currentPlayer] = places[currentPlayer] + roll;
-		if (places[currentPlayer] > 11) places[currentPlayer] = places[currentPlayer] - 12;
+
+		// si nouvelle position du joueur > 11
+		if (places[currentPlayer] > 11) {
+
+			// on le recule de 12
+			places[currentPlayer] = places[currentPlayer] - 12;
+		}
 
 		System.out.println(players.get(currentPlayer)
                 + "'s new location is "
@@ -85,6 +113,9 @@ public class Game {
 	}
 
 	private void askQuestion() {
+
+    	String currentCategory = currentCategory();
+    	// faire un switch case en utilisant la variable définie au dessus
 		if (currentCategory() == "Pop")
 			System.out.println(popQuestions.removeFirst());
 		if (currentCategory() == "Science")
@@ -97,6 +128,7 @@ public class Game {
 	
 	
 	private String currentCategory() {
+    	// faire un switch case avec "Rock" en default plutôt
 		if (places[currentPlayer] == 0) return "Pop";
 		if (places[currentPlayer] == 4) return "Pop";
 		if (places[currentPlayer] == 8) return "Pop";
@@ -109,12 +141,14 @@ public class Game {
 		return "Rock";
 	}
 
+	// méthode complexe, à splitter en plusieurs
 	public boolean wasCorrectlyAnswered() {
+
+    	// une fonction handlePenaltyBox
 		if (inPenaltyBox[currentPlayer]){
 			if (isGettingOutOfPenaltyBox) {
 				System.out.println("Answer was correct!!!!");
-				currentPlayer++;
-				if (currentPlayer == players.size()) currentPlayer = 0;
+				playerTurnEnd();
 				purses[currentPlayer]++;
 				System.out.println(players.get(currentPlayer)
 						+ " now has "
@@ -125,8 +159,7 @@ public class Game {
 
 				return winner;
 			} else {
-				currentPlayer++;
-				if (currentPlayer == players.size()) currentPlayer = 0;
+				playerTurnEnd();
 				return true;
 			}
 			
@@ -134,7 +167,7 @@ public class Game {
 			
 		} else {
 		
-			System.out.println("Answer was corrent!!!!");
+			System.out.println("Answer was correct!!!!");
 			purses[currentPlayer]++;
 			System.out.println(players.get(currentPlayer) 
 					+ " now has "
@@ -142,8 +175,7 @@ public class Game {
 					+ " Gold Coins.");
 			
 			boolean winner = didPlayerWin();
-			currentPlayer++;
-			if (currentPlayer == players.size()) currentPlayer = 0;
+			playerTurnEnd();
 			
 			return winner;
 		}
@@ -153,14 +185,28 @@ public class Game {
 		System.out.println("Question was incorrectly answered");
 		System.out.println(players.get(currentPlayer)+ " was sent to the penalty box");
 		inPenaltyBox[currentPlayer] = true;
-		
-		currentPlayer++;
-		if (currentPlayer == players.size()) currentPlayer = 0;
+
+		playerTurnEnd();
 		return true;
+	}
+
+	private void playerTurnEnd() {
+
+		if (this.isLastPlayer()) {
+			currentPlayer = 0;
+		} else {
+			currentPlayer++;
+		}
+	}
+
+	private boolean isLastPlayer() {
+		return currentPlayer == players.size();
 	}
 
 
 	private boolean didPlayerWin() {
+
+    	// c'est pas plutôt l'inverse ? si = 6 alors il a gagné ?
 		return !(purses[currentPlayer] == 6);
 	}
 }

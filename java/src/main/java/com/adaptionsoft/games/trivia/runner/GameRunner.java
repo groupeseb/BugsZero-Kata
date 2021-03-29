@@ -25,16 +25,16 @@ public class GameRunner {
 
 		do {
 
-			aGame.roll(rand.nextInt(5) + 1);
+			// faire des constantes pour mieux comprendre à quoi correspondent ces valeurs
+			int playerDiceResult = rand.nextInt(6) + 1;
+			aGame.roll(playerDiceResult);
 
-			if (rand.nextInt(9) == 7) {
+			// Si paire => ko, sinon ok
+			if (playerDiceResult % 2 == 0) {
 				notAWinner = aGame.wrongAnswer();
 			} else {
 				notAWinner = aGame.wasCorrectlyAnswered();
 			}
-
-
-
 		} while (notAWinner);
 	}
 }

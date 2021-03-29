@@ -9,6 +9,7 @@ import org.junit.Test;
 import java.io.*;
 import java.util.Random;
 import java.util.stream.IntStream;
+//import java.util.stream.IntStream;
 
 public class GameTest {
 
@@ -22,6 +23,5 @@ public class GameTest {
         IntStream.range(1,15).forEach(i -> GameRunner.playGame(randomizer));
 
         Approvals.verify(resultStream.toString());
-
 	}
 }
