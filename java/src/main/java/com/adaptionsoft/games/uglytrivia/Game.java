@@ -46,6 +46,7 @@ public class Game {
 	public void add(String playerName) {
 
     	// rajouter vérification nombre de joueurs, si > MAX alors exception
+
 	    players.add(playerName);
 
 	    int playerNo = howManyPlayers();
@@ -200,7 +201,8 @@ public class Game {
 	}
 
 	private boolean isLastPlayer() {
-		return currentPlayer == players.size();
+
+    	return currentPlayer == players.size() - 1;
 	}
 
 
