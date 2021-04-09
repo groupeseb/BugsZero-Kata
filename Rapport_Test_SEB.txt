@@ -1,0 +1,14 @@
+Test SEB
+
+Concernant l'application on constate plusieurs problèmes de conception :
+
+1-L'absence de spring prive le jeu de tout les conceptes de couplage léger et d'instanciation unique (Spring Core)
+
+2-La classe Game.java pourrait être éclater en divers service et classes :
+	*Le jeu est composé de joueurs avec un nom, un ordre de passage et surtout un montant de pièces d'or qui pourrait faire l'objet d'une classe Player.java
+	*Un plateau de jeu avec des cases est également présent pour le déplacement des joueurs et pourrait faire l'objet d'une classe Board.java contenant une classe Case.java pour les cases contenat une pièce d'or ou non
+	*Une couche services devrait être implémenté pour gérer les méthodes notamment d'ajout de joueurs
+	
+3-Un jeu sans IHM est difficilement vendeur
+
+4-L'absence de commentaires rend difficile la compréhension du code
