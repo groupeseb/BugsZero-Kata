@@ -1,0 +1,12 @@
+D'un point de vu global :
+- Trop de manipulation d'index qui engendre des bugs à éviter !
+- Trop de tableaux ...
+
+Solution :
+découpé le code en plus de methodes crée des classes
+- définir une classe pour les joueurs qui contient enttre autre son nom,  le nombre de point au départ zéro , la case actuelle
+   - j'ai une bonne réponse --> j'appel la méthode qui m'attribue un point au lieu de joué avec des tableaux
+       -- donc si on a une classe joueur on va au niveau de l'instance qui joue lui ajouté un point
+....
+
+- Rajouter des test unitaire

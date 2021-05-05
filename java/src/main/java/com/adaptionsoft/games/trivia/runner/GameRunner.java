@@ -24,7 +24,7 @@ public class GameRunner {
 
 
 		do {
-
+			// Bug le dé ne va as jusqu'à 6 mais seulement de 1 à 5, rand.nextInt(6) + 1
 			aGame.roll(rand.nextInt(5) + 1);
 
 			if (rand.nextInt(9) == 7) {

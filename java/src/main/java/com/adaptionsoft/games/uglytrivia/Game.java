@@ -5,6 +5,7 @@ import java.util.LinkedList;
 
 public class Game {
     ArrayList players = new ArrayList();
+    // nous sommes ici limiter à 6 joueurs
     int[] places = new int[6];
     int[] purses  = new int[6];
     boolean[] inPenaltyBox  = new boolean[6];
@@ -30,6 +31,7 @@ public class Game {
 		return "Rock Question " + index;
 	}
 
+	// methode non utilisée
 	public boolean isPlayable() {
 		return (howManyPlayers() >= 2);
 	}
@@ -57,14 +59,15 @@ public class Game {
 		
 		if (inPenaltyBox[currentPlayer]) {
 			if (roll % 2 != 0) {
-				isGettingOutOfPenaltyBox = true;
+				isGettingOutOfPenaltyBox = true; // totalement arbitraire cela ne reflette pas la réalité si le dé est impaire
+
 				
 				System.out.println(players.get(currentPlayer) + " is getting out of the penalty box");
 				movePlayerAndAskQuestion(roll);
 			} else {
 				System.out.println(players.get(currentPlayer) + " is not getting out of the penalty box");
 				isGettingOutOfPenaltyBox = false;
-				}
+			}
 			
 		} else {
 
@@ -85,6 +88,7 @@ public class Game {
 	}
 
 	private void askQuestion() {
+    	// crée une enum pour le type de Question et utiliser un swich case si on reste dans cette logique
 		if (currentCategory() == "Pop")
 			System.out.println(popQuestions.removeFirst());
 		if (currentCategory() == "Science")
@@ -113,7 +117,7 @@ public class Game {
 		if (inPenaltyBox[currentPlayer]){
 			if (isGettingOutOfPenaltyBox) {
 				System.out.println("Answer was correct!!!!");
-				currentPlayer++;
+				currentPlayer++; // on va ajouter les points au mauvais joueur lool c'est de la triche
 				if (currentPlayer == players.size()) currentPlayer = 0;
 				purses[currentPlayer]++;
 				System.out.println(players.get(currentPlayer)
@@ -125,6 +129,7 @@ public class Game {
 
 				return winner;
 			} else {
+				// on ne donne pas de point au joueur concerné
 				currentPlayer++;
 				if (currentPlayer == players.size()) currentPlayer = 0;
 				return true;
@@ -160,6 +165,8 @@ public class Game {
 	}
 
 
+	// le jeu s'arrete quand la valeur est fausse quand l y a un gagnant
+	// quand le joueur a moins de 6 piece la methode retourne true il faut changer le nom de la methode
 	private boolean didPlayerWin() {
 		return !(purses[currentPlayer] == 6);
 	}
