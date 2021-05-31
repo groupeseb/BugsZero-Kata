@@ -7,12 +7,13 @@ import com.adaptionsoft.games.uglytrivia.Game;
 
 public class GameRunner {
 
-	private static boolean notAWinner;
+	// Stocker du "not" dans un booléen n'est pas clair et peut conduire à des erreurs d'interprétation...
+	private static boolean winner;
 
 	public static void main(String[] args) {
 		Random rand = new Random();
 		playGame(rand);
-		
+
 	}
 
 	public static void playGame(Random rand) {
@@ -22,19 +23,15 @@ public class GameRunner {
 		aGame.add("Pat");
 		aGame.add("Sue");
 
+		if(aGame.isPlayable()) {
+			do {
 
-		do {
+				// Ce n'est pas le runner qui doit gérer les roll, cela fait partie du jeu !
+				// Pareil pour les réponses correctes ou incorrectes
+				winner = aGame.roll();
 
-			aGame.roll(rand.nextInt(5) + 1);
+			} while (!winner);
+		}
 
-			if (rand.nextInt(9) == 7) {
-				notAWinner = aGame.wrongAnswer();
-			} else {
-				notAWinner = aGame.wasCorrectlyAnswered();
-			}
-
-
-
-		} while (notAWinner);
 	}
 }

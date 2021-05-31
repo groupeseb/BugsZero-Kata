@@ -1,6 +1,5 @@
 package com.adaptionsoft.games.trivia;
 
-import static org.junit.Assert.*;
 
 import com.adaptionsoft.games.trivia.runner.GameRunner;
 import org.approvaltests.Approvals;
@@ -12,8 +11,9 @@ import java.util.stream.IntStream;
 
 public class GameTest {
 
+    // C'est quoi ce test ?
 	@Test
-	public void itsLockedDown() throws Exception {
+	public void itsLockedDown() {
 
         Random randomizer = new Random(123455);
         ByteArrayOutputStream resultStream = new ByteArrayOutputStream();
