@@ -1,0 +1,22 @@
+Dans un premier temps, je me suis penché d’abord à analyser le code pour comprendre comment ils fonctionnent,
+ quels sont les bugs à corriger, et qu’elles sont les refactos à apporter. Tout en gardant conscience de ne pas introduire
+  de nouveau bug dû au refactoring à faire.
+
+Suite à mon analyse :
+-	Les fonctions sont trop responsables. Par exemple : la fonction « movePlayerAndAskQuestion » fait trop de choses,
+ on pourrait découper en deux fonctions. Une « movePlayer », pour déplacer le joueur, et « AskQuestion() » pour poser une question.
+-	La classe « Game » gère tout le jeu et la fait devenir un god object. Alors que par soucis de maintenabilité,
+ lisibilité et d’évolution créer de nouvelles classes implémentant leurs données et leurs fonctionnalités.
+ On peut facilement voir des classes telles que Player, Game (gérant la boucle du jeu), GameState (gérant uniquement l’état du plateau..),
+ la class Question avec ses classes filles ScienceQuestion, RockQuestion.. (polymorphisme si comportement spécifique à un type de question sinon un simple
+ type énumérer peut remplacer les filles)
+-	Il n’y a aucun test unitaire. Pour une maintenabilité et une évolution pérenne, ils sont importants pour s’assurer de ne pas introduire de bug.
+ Il serait donc intéressant de les implémenter en faisait la refacto. En plus de juste les implémenter, cela nous assure d’avoir le même comportement,
+ refacto ou non.
+-	De plus, pour faciliter les tests, il serait judicieux d’éviter les mutations afin d’avoir à tester qu’une unité de code et non simuler le jeu tout entier.
+-	Quelques oublies d’opérateurs pratiques (% pour le déplacement, un switch case à la place de pleins d’if sur la même condition,…),
+ attention également aux if sans accolade : si on rajoute une ligne dans ce if sans les mettre cela génère des bugs.
+
+
+Par manque de temps, je ne peux pas aller plus loin. Mais dans le cadre d’un réel projet,
+j’aurai évalué la charge de travail nécessaire et l'aurait transmis au chef de projet.
