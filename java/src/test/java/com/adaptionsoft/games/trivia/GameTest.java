@@ -1,5 +1,6 @@
 package com.adaptionsoft.games.trivia;
 
+//Eviter l'utilisation de la wildcard dans les imports
 import static org.junit.Assert.*;
 
 import com.adaptionsoft.games.trivia.runner.GameRunner;
@@ -10,6 +11,9 @@ import java.io.*;
 import java.util.Random;
 import java.util.stream.IntStream;
 
+/*
+Classe de test très pauvre et non unitaire, il faudra créer des calsses de test permettant de tester unitairement chaque fonctions du code
+ */
 public class GameTest {
 
 	@Test
