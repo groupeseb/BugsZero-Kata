@@ -4,11 +4,17 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 
 public class Game {
-    ArrayList players = new ArrayList();
+	//la variable d'insance players ne donne pas une idée sur les éléménts qui peut contenir (alors que là on parle des noms des joueurs)
+	//j'ai vu plusieurs opérations (méthodes) dans cette classe qui concerne juste la liste des joueurs (Players). On peut créer un wrapper "ListPlayers"
+	//1: qui contient une variable d'instance ArrayList<String> players = new ArrayList();
+	// 2: avec des méthodes addPlayer , howManyPlayers, ...
+    ArrayList<String> players = new ArrayList();
     int[] places = new int[6];
     int[] purses  = new int[6];
     boolean[] inPenaltyBox  = new boolean[6];
-    
+
+	//proposition:  on peut utiliser une seule instance d'un wrapper des questions. cette classe wrapper contient une map de <place, Question>
+	//classe Question est une interface qui peut être de plusieurs types (PopQuestion, ScienceQuestion)
     LinkedList popQuestions = new LinkedList();
     LinkedList scienceQuestions = new LinkedList();
     LinkedList sportsQuestions = new LinkedList();
@@ -16,7 +22,10 @@ public class Game {
     
     int currentPlayer = 0;
     boolean isGettingOutOfPenaltyBox;
-    
+
+	//1: dans le constructeur on doit aussi définir le nombre des joueurs pour le jeu lancé
+	//2: nous devons aussi ajouter une partie de validation (avec possibilité de lever une exception) sur le nombre des joueurs requis pour le jeu (2 minumum)
+
     public  Game(){
     	for (int i = 0; i < 50; i++) {
 			popQuestions.addLast("Pop Question " + i);
@@ -34,9 +43,9 @@ public class Game {
 		return (howManyPlayers() >= 2);
 	}
 
-	public boolean add(String playerName) {
-		
-		
+	//nom de la fonction est non conforme au but de la fonction. je préfère addPlayer
+	public boolean addPlayer(String playerName) {
+
 	    players.add(playerName);
 	    places[howManyPlayers()] = 0;
 	    purses[howManyPlayers()] = 0;
@@ -51,6 +60,7 @@ public class Game {
 		return players.size();
 	}
 
+	//méthode avec deux niveaux de if/else est déconseillé (à refactoriser)
 	public void roll(int roll) {
 		System.out.println(players.get(currentPlayer) + " is the current player");
 		System.out.println("They have rolled a " + roll);
@@ -84,6 +94,7 @@ public class Game {
 		askQuestion();
 	}
 
+
 	private void askQuestion() {
 		if (currentCategory() == "Pop")
 			System.out.println(popQuestions.removeFirst());
@@ -95,7 +106,9 @@ public class Game {
 			System.out.println(rockQuestions.removeFirst());		
 	}
 	
-	
+
+	//1: il faut créer une enum pour la liste des catégorie avec des méthodes qui permet de récupérer les categories à partir d'un numéro de place
+	//2: beaucoup de duplication des lignes et de répétition
 	private String currentCategory() {
 		if (places[currentPlayer] == 0) return "Pop";
 		if (places[currentPlayer] == 4) return "Pop";
@@ -109,6 +122,7 @@ public class Game {
 		return "Rock";
 	}
 
+	//fonction à refactoriser (longue, complexe à testé avec différents cas if/else)
 	public boolean wasCorrectlyAnswered() {
 		if (inPenaltyBox[currentPlayer]){
 			if (isGettingOutOfPenaltyBox) {
