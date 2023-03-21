@@ -4,12 +4,22 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 
 public class Game {
+	/* 
+	 La déclaration de List au lieu de ArrayList ça sera plus efficace par exemple si un jour on besoin d'une linkedList ça sera faisable
+	 avec une décalartion de List et ce n'est pas le cas pour ArrayList.
+	 Si on déclare une classe il faut au moins préciser le type => ArrayList<X> list = new ArrayList<X>()
+	 */
+	
     ArrayList players = new ArrayList();
     int[] places = new int[6];
     int[] purses  = new int[6];
     boolean[] inPenaltyBox  = new boolean[6];
     
-    LinkedList popQuestions = new LinkedList();
+    /*
+     Même remarque que l'Arraylist list, il est mieux de déclarer une interface qu'une classe.
+     Si on déclare une classe il faut au moins préciser le type => LinkedList<X> list = new LinkedList<X>()
+     */
+    LinkedList popQuestions = new LinkedList<>();
     LinkedList scienceQuestions = new LinkedList();
     LinkedList sportsQuestions = new LinkedList();
     LinkedList rockQuestions = new LinkedList();
@@ -42,6 +52,9 @@ public class Game {
 	    purses[howManyPlayers()] = 0;
 	    inPenaltyBox[howManyPlayers()] = false;
 	    
+	    /*
+	     On peut remplacer le system.out par les loggers
+	     */
 	    System.out.println(playerName + " was added");
 	    System.out.println("They are player number " + players.size());
 		return true;
@@ -52,6 +65,10 @@ public class Game {
 	}
 
 	public void roll(int roll) {
+		
+		/*
+	     on peut remplacer le system.out par les loggers
+	     */
 		System.out.println(players.get(currentPlayer) + " is the current player");
 		System.out.println("They have rolled a " + roll);
 		
@@ -85,6 +102,9 @@ public class Game {
 	}
 
 	private void askQuestion() {
+		/*
+		 On doit utiliser equals au lieu de == pour comparer les strings car == compare les références des objets et non pas les valeurs des objets
+		 */
 		if (currentCategory() == "Pop")
 			System.out.println(popQuestions.removeFirst());
 		if (currentCategory() == "Science")
@@ -121,6 +141,7 @@ public class Game {
 						+ purses[currentPlayer]
 						+ " Gold Coins.");
 
+				// On n'a pas besoin d'un nouveau variable, on peut simplement return le didPlayerWin()
 				boolean winner = didPlayerWin();
 
 				return winner;
@@ -141,6 +162,7 @@ public class Game {
 					+ purses[currentPlayer]
 					+ " Gold Coins.");
 			
+			// On n'a pas besoin d'un nouveau variable, on peut simplement return le didPlayerWin()
 			boolean winner = didPlayerWin();
 			currentPlayer++;
 			if (currentPlayer == players.size()) currentPlayer = 0;
@@ -161,6 +183,7 @@ public class Game {
 
 
 	private boolean didPlayerWin() {
+		// On peut utiliser directement le != pour comparer les purses[currentPlayer] avec le 6
 		return !(purses[currentPlayer] == 6);
 	}
 }
