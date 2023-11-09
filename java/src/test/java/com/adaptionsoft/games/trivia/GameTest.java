@@ -13,7 +13,7 @@ import java.util.stream.IntStream;
 public class GameTest {
 
 	@Test
-	public void itsLockedDown() throws Exception {
+	public void itsLockedDown() {
 
         Random randomizer = new Random(123455);
         ByteArrayOutputStream resultStream = new ByteArrayOutputStream();

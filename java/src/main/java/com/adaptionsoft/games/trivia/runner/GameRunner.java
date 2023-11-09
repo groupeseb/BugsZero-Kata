@@ -9,24 +9,27 @@ public class GameRunner {
 
 	private static boolean notAWinner;
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 		Random rand = new Random();
 		playGame(rand);
 		
 	}
 
-	public static void playGame(Random rand) {
-		Game aGame = new Game();
-
-		aGame.add("Chet");
-		aGame.add("Pat");
-		aGame.add("Sue");
+	public static void playGame(Random rand) throws Exception {
+		Game aGame = new Game("Chet", "Pat", "Sue");
 
 
 		do {
+			// nextPlayer
+			aGame.nextPlayer();
+			// movePlayer
+			// displayNewPlace
+			// displayQuestion
+			// processQuestionResponse
+			// checkIfPlayerHasWon
 
+			// Créer une fonction pour gérer les réponses aux questions
 			aGame.roll(rand.nextInt(5) + 1);
-
 			if (rand.nextInt(9) == 7) {
 				notAWinner = aGame.wrongAnswer();
 			} else {

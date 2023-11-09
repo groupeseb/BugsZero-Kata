@@ -8,6 +8,7 @@ public class Player {
 
   protected int purce;
 
+  // TODO Add unit tests
   public Player(String name) {
     this.name = name;
     this.inPenaltyBox = false;
@@ -39,6 +40,7 @@ public class Player {
     return purce;
   }
 
+  // TODO Add unit tests
   public void moveForward(int roll) {
     this.place = (this.place + roll) % 12;
   }
@@ -51,7 +53,7 @@ public class Player {
     this.purce += 1;
   }
 
-  public boolean win() {
+  public boolean hasWon() {
     this.purce
   }
 }
