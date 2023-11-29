@@ -14,20 +14,17 @@ public class Game {
     boolean isGettingOutOfPenaltyBox;
     
     public  Game(){
+
 		for (int i = 0; i < 50; i++) {
 			popQuestions.addLast("Pop Question " + i);
-			scienceQuestions.addLast(("Science Question " + i));
-			sportsQuestions.addLast(("Sports Question " + i));
-			rockQuestions.addLast(createRockQuestion(i));
+			scienceQuestions.addLast("Science Question " + i);
+			sportsQuestions.addLast("Sports Question " + i);
+			rockQuestions.addLast("Rock Question " + i);
 		}
     }
 
-	public String createRockQuestion(int index){
-		return "Rock Question " + index;
-	}
-
 	public boolean isPlayable() {
-		return (howManyPlayers() >= 2);
+		return players.size() >= 2;
 	}
 
 	public boolean add(String playerName) {
@@ -37,11 +34,8 @@ public class Game {
 		return true;
 	}
 
-	public int howManyPlayers() {
-		return players.size();
-	}
-
 	public void roll(int roll) {
+
 		System.out.println(currentPlayer.getName() + " is the current player");
 		System.out.println("They have rolled a " + roll);
 
@@ -50,7 +44,8 @@ public class Game {
 				isGettingOutOfPenaltyBox = true;
 
 				System.out.println(currentPlayer.getName() + " is getting out of the penalty box");
-				movePlayerAndAskQuestion(roll);
+				movePlayer(currentPlayer, roll);
+				askQuestion(currentPlayer);
 			} else {
 				System.out.println(currentPlayer.getName() + " is not getting out of the penalty box");
 				isGettingOutOfPenaltyBox = false;
@@ -58,39 +53,39 @@ public class Game {
 
 		} else {
 
-			movePlayerAndAskQuestion(roll);
+			movePlayer(currentPlayer, roll);
+			askQuestion(currentPlayer);
 		}
 
 	}
 
-	private void movePlayerAndAskQuestion(int roll) {
+	private void movePlayer(Player _player, int _roll) {
 
-		currentPlayer.setPlace(currentPlayer.getPlace() + roll);
+		_player.setPlace(_player.getPlace() + _roll);
 
-		if (currentPlayer.getPlace() > 11)
-			currentPlayer.setPlace(currentPlayer.getPlace() - 12);
+		if (_player.getPlace() > 11)
+			_player.setPlace(_player.getPlace() - 12);
 
-		System.out.println(currentPlayer.getName()
+		System.out.println(_player.getName()
                 + "'s new location is "
-                + currentPlayer.getPlace());
-		System.out.println("The category is " + currentCategory());
-		askQuestion();
+                + _player.getPlace());
 	}
 
-	private void askQuestion() {
-		if (currentCategory().equals("Pop"))
-			System.out.println(popQuestions.removeFirst());
-		if (currentCategory().equals("Science"))
-			System.out.println(scienceQuestions.removeFirst());
-		if (currentCategory().equals("Sports"))
-			System.out.println(sportsQuestions.removeFirst());
-		if (currentCategory().equals("Rock"))
-			System.out.println(rockQuestions.removeFirst());
+	private void askQuestion(Player _player) {
+
+		System.out.println("The category for " + _player.getName() + " is " + currentCategory(_player.getPlace()));
+
+		switch (currentCategory(_player.getPlace())) {
+			case "Pop" : System.out.println(popQuestions.removeFirst());
+			case "Science" : System.out.println(scienceQuestions.removeFirst());
+			case "Sports" : System.out.println(sportsQuestions.removeFirst());
+			case "Rock" : System.out.println(rockQuestions.removeFirst());
+		}
 	}
 
 
-	private String currentCategory() {
-		switch (currentPlayer.getPlace() % 4) {
+	private String currentCategory(int _place) {
+		switch (_place % 4) {
 			case 0 : return "Pop";
 			case 1 : return "Science";
 			case 2 : return "Sports";

@@ -9,9 +9,9 @@ import com.adaptionsoft.games.uglytrivia.Player;
 public class GameRunner {
 
 	private static boolean notAWinner;
+	static Random rand = new Random();
 
 	public static void main(String[] args) {
-		Random rand = new Random();
 		playGame(rand);
 		
 	}
