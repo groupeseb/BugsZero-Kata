@@ -107,11 +107,7 @@ public class Game {
 			if (isGettingOutOfPenaltyBox) {
 				System.out.println("Answer was correct!!!!");
 
-				// TODO : refacto (duplicate)
-				if (players.indexOf(currentPlayer) + 1 != players.size())
-					currentPlayer = players.get(players.indexOf(currentPlayer) + 1);
-				else
-					currentPlayer = players.get(0);
+				currentPlayer = nextPlayer(currentPlayer);
 
 				currentPlayer.setPurse(currentPlayer.getPurse() + 1);
 				System.out.println(currentPlayer.getName()
@@ -123,11 +119,9 @@ public class Game {
 
 				return winner;
 			} else {
-				// TODO : refacto (duplicate)
-				if (players.indexOf(currentPlayer) + 1 != players.size())
-					currentPlayer = players.get(players.indexOf(currentPlayer) + 1);
-				else
-					currentPlayer = players.get(0);
+
+				currentPlayer = nextPlayer(currentPlayer);
+
 				return true;
 			}
 
@@ -143,11 +137,7 @@ public class Game {
 
 			boolean winner = didPlayerWin();
 
-			// TODO : refacto (duplicate)
-			if (players.indexOf(currentPlayer) + 1 != players.size())
-				currentPlayer = players.get(players.indexOf(currentPlayer) + 1);
-			else
-				currentPlayer = players.get(0);
+			currentPlayer = nextPlayer(currentPlayer);
 
 			return winner;
 		}
@@ -158,14 +148,17 @@ public class Game {
 		System.out.println(currentPlayer.getName() + " was sent to the penalty box");
 		currentPlayer.setInPenaltyBox(true);
 
-		// TODO : refacto (duplicate)
-		if (players.indexOf(currentPlayer) + 1 != players.size())
-			currentPlayer = players.get(players.indexOf(currentPlayer) + 1);
-		else
-			currentPlayer = players.get(0);
+		currentPlayer = nextPlayer(currentPlayer);
 		return true;
 	}
 
+	private Player nextPlayer(Player _player) {
+
+		if (players.indexOf(_player) + 1 != players.size())
+			return players.get(players.indexOf(_player) + 1);
+		else
+			return players.get(0);
+	}
 
 	private boolean didPlayerWin() {
 		return !(currentPlayer.getPurse() == 6);
