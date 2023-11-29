@@ -1,5 +1,5 @@
 
-# BugsZero Kata
+# BugsZero Kata AuV
 <img align="right" width="500" height="500" src="https://raw.githubusercontent.com/martinsson/BugsZero-Kata/master/bugs-zero-image.jpg"/> 
 Bugs are optional, they sneak into our code much thanks the design choices we do, or fail to do. Let's 
 try refactoring some existing code to make it more bug-repellent!
