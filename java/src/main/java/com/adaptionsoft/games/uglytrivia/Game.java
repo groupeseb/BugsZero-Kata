@@ -5,12 +5,14 @@ import java.util.LinkedList;
 
 public class Game {
 	ArrayList<Player> players = new ArrayList<>();
-    
+
+	// TODO : Faire une classe pour gérer la pile de questions
     LinkedList<String> popQuestions = new LinkedList<>();
     LinkedList<String> scienceQuestions = new LinkedList<>();
     LinkedList<String> sportsQuestions = new LinkedList<>();
     LinkedList<String> rockQuestions = new LinkedList<>();
 	Player currentPlayer;
+	// TODO : gerer isGettingOutOfPenaltyBox dans le player
     boolean isGettingOutOfPenaltyBox;
     
     public  Game(){
@@ -23,15 +25,17 @@ public class Game {
 		}
     }
 
+	// Not used?
 	public boolean isPlayable() {
 		return players.size() >= 2;
 	}
 
-	public boolean add(String playerName) {
+	public void addPlayer(Player _player) {
 
-		System.out.println(playerName + " was added");
-		System.out.println("They are player number " + players.size());
-		return true;
+		getPlayers().add(_player);
+
+		System.out.println(_player.getName() + " was added");
+		System.out.println("They is now " + players.size() + " players");
 	}
 
 	public void roll(int roll) {
@@ -40,15 +44,13 @@ public class Game {
 		System.out.println("They have rolled a " + roll);
 
 		if (currentPlayer.isInPenaltyBox()) {
-			if (roll % 2 != 0) {
-				isGettingOutOfPenaltyBox = true;
 
+			if (roll % 2 != 0) {
 				System.out.println(currentPlayer.getName() + " is getting out of the penalty box");
 				movePlayer(currentPlayer, roll);
 				askQuestion(currentPlayer);
 			} else {
 				System.out.println(currentPlayer.getName() + " is not getting out of the penalty box");
-				isGettingOutOfPenaltyBox = false;
 			}
 
 		} else {
@@ -93,7 +95,7 @@ public class Game {
 		}
 	}
 
-	public boolean wasCorrectlyAnswered() {
+	public void wasCorrectlyAnswered() {
 		if (currentPlayer.isInPenaltyBox()){
 			if (isGettingOutOfPenaltyBox) {
 				System.out.println("Answer was correct!!!!");
@@ -105,32 +107,22 @@ public class Game {
 						+ " now has "
 						+ currentPlayer.getPurse()
 						+ " Gold Coins.");
-
-				boolean winner = didPlayerWin();
-
-				return winner;
 			} else {
 
 				currentPlayer = nextPlayer(currentPlayer);
-
-				return true;
 			}
 
 
 		} else {
 
-			System.out.println("Answer was corrent!!!!");
+			System.out.println("Answer was correct!!!!");
 			currentPlayer.setPurse(currentPlayer.getPurse() + 1);
 			System.out.println(currentPlayer.getName()
 					+ " now has "
 					+ currentPlayer.getPurse()
 					+ " Gold Coins.");
 
-			boolean winner = didPlayerWin();
-
 			currentPlayer = nextPlayer(currentPlayer);
-
-			return winner;
 		}
 	}
 
@@ -143,16 +135,26 @@ public class Game {
 		return true;
 	}
 
+	public Player isAnyWinner() {
+
+		Player result = null;
+
+		for (Player p : players) {
+			if (p.getPurse() == 6) {
+				result = p;
+				break;
+			}
+		}
+
+		return result;
+	}
+
 	private Player nextPlayer(Player _player) {
 
 		if (players.indexOf(_player) + 1 != players.size())
 			return players.get(players.indexOf(_player) + 1);
 		else
 			return players.get(0);
-	}
-
-	private boolean didPlayerWin() {
-		return !(currentPlayer.getPurse() == 6);
 	}
 
 	public ArrayList<Player> getPlayers() {
