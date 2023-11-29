@@ -6,10 +6,10 @@ import java.util.LinkedList;
 public class Game {
 	ArrayList<Player> players = new ArrayList<>();
     
-    LinkedList popQuestions = new LinkedList();
-    LinkedList scienceQuestions = new LinkedList();
-    LinkedList sportsQuestions = new LinkedList();
-    LinkedList rockQuestions = new LinkedList();
+    LinkedList<String> popQuestions = new LinkedList<>();
+    LinkedList<String> scienceQuestions = new LinkedList<>();
+    LinkedList<String> sportsQuestions = new LinkedList<>();
+    LinkedList<String> rockQuestions = new LinkedList<>();
 	Player currentPlayer;
     boolean isGettingOutOfPenaltyBox;
     
@@ -78,28 +78,24 @@ public class Game {
 	}
 
 	private void askQuestion() {
-		if (currentCategory() == "Pop")
+		if (currentCategory().equals("Pop"))
 			System.out.println(popQuestions.removeFirst());
-		if (currentCategory() == "Science")
+		if (currentCategory().equals("Science"))
 			System.out.println(scienceQuestions.removeFirst());
-		if (currentCategory() == "Sports")
+		if (currentCategory().equals("Sports"))
 			System.out.println(sportsQuestions.removeFirst());
-		if (currentCategory() == "Rock")
+		if (currentCategory().equals("Rock"))
 			System.out.println(rockQuestions.removeFirst());
 	}
 
 
 	private String currentCategory() {
-		if (currentPlayer.getPlace() == 0) return "Pop";
-		if (currentPlayer.getPlace() == 4) return "Pop";
-		if (currentPlayer.getPlace() == 8) return "Pop";
-		if (currentPlayer.getPlace() == 1) return "Science";
-		if (currentPlayer.getPlace() == 5) return "Science";
-		if (currentPlayer.getPlace() == 9) return "Science";
-		if (currentPlayer.getPlace() == 2) return "Sports";
-		if (currentPlayer.getPlace() == 6) return "Sports";
-		if (currentPlayer.getPlace() == 10) return "Sports";
-		return "Rock";
+		switch (currentPlayer.getPlace() % 4) {
+			case 0 : return "Pop";
+			case 1 : return "Science";
+			case 2 : return "Sports";
+			default : return "Rock";
+		}
 	}
 
 	public boolean wasCorrectlyAnswered() {
