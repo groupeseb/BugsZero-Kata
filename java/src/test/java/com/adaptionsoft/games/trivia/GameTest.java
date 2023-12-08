@@ -10,6 +10,7 @@ import java.io.*;
 import java.util.Random;
 import java.util.stream.IntStream;
 
+// pas assez de test et code difficilement testable
 public class GameTest {
 
 	@Test
