@@ -1,1 +1,16 @@
+1.
+Modélisation architecturale à reprendre
+
+2.
+Redondance dans le code, possibilité de créer une seule liste au lieu de 4, ajouter de la cohésion au code
+
+3.
+potentiels bugs, utiliser des objets au lieu de primitives
+
+4. 
+Rendre le code plus facilement testable et modulable
+
+class Player : id, name , position
+enum Category : "Pop","Science","Sports","Rock"
+pattern strategy pour l'appel aux questions : interface <<Question>> , classes implementées -> RockQuestion, etc...
 
