@@ -3,12 +3,14 @@ package com.adaptionsoft.games.uglytrivia;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
+// pourquoi public
 public class Game {
     ArrayList players = new ArrayList();
     int[] places = new int[6];
     int[] purses  = new int[6];
     boolean[] inPenaltyBox  = new boolean[6];
-    
+
+    // ArraList + performant et créer une seule liste au lieu de 4
     LinkedList popQuestions = new LinkedList();
     LinkedList scienceQuestions = new LinkedList();
     LinkedList sportsQuestions = new LinkedList();
@@ -19,6 +21,7 @@ public class Game {
     
     public  Game(){
     	for (int i = 0; i < 50; i++) {
+		// redondance
 			popQuestions.addLast("Pop Question " + i);
 			scienceQuestions.addLast(("Science Question " + i));
 			sportsQuestions.addLast(("Sports Question " + i));
@@ -29,7 +32,7 @@ public class Game {
 	public String createRockQuestion(int index){
 		return "Rock Question " + index;
 	}
-
+		
 	public boolean isPlayable() {
 		return (howManyPlayers() >= 2);
 	}
@@ -46,15 +49,18 @@ public class Game {
 	    System.out.println("They are player number " + players.size());
 		return true;
 	}
-	
+
+	// Créer constante 
 	public int howManyPlayers() {
 		return players.size();
 	}
 
+	// if/else renvoient la meme methode, possibilité de simplifier l'imbriquation des if/else et refacto
 	public void roll(int roll) {
 		System.out.println(players.get(currentPlayer) + " is the current player");
 		System.out.println("They have rolled a " + roll);
 		
+		// eviter les primitives en parmètre ou comparaison car source de bugs
 		if (inPenaltyBox[currentPlayer]) {
 			if (roll % 2 != 0) {
 				isGettingOutOfPenaltyBox = true;
@@ -73,8 +79,10 @@ public class Game {
 		
 	}
 
+	// eviter les primitives en parmètre ou comparaison car source de bugs
 	private void movePlayerAndAskQuestion(int roll) {
 		places[currentPlayer] = places[currentPlayer] + roll;
+		// code source de bug
 		if (places[currentPlayer] > 11) places[currentPlayer] = places[currentPlayer] - 12;
 
 		System.out.println(players.get(currentPlayer)
@@ -84,6 +92,7 @@ public class Game {
 		askQuestion();
 	}
 
+	// redondance, meme code 4 fois, refacto necessaire, utiliser Map : category et questions
 	private void askQuestion() {
 		if (currentCategory() == "Pop")
 			System.out.println(popQuestions.removeFirst());
@@ -95,7 +104,7 @@ public class Game {
 			System.out.println(rockQuestions.removeFirst());		
 	}
 	
-	
+	// redondance
 	private String currentCategory() {
 		if (places[currentPlayer] == 0) return "Pop";
 		if (places[currentPlayer] == 4) return "Pop";
@@ -109,6 +118,7 @@ public class Game {
 		return "Rock";
 	}
 
+	// méthode illisible et source de bugs
 	public boolean wasCorrectlyAnswered() {
 		if (inPenaltyBox[currentPlayer]){
 			if (isGettingOutOfPenaltyBox) {
@@ -159,7 +169,7 @@ public class Game {
 		return true;
 	}
 
-
+	// si l'on change les regles du jeu, methode doit etre modifiee
 	private boolean didPlayerWin() {
 		return !(purses[currentPlayer] == 6);
 	}
