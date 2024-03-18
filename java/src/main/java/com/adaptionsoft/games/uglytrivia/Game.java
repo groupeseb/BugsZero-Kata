@@ -5,8 +5,10 @@ import java.util.LinkedList;
 
 public class Game {
     ArrayList players = new ArrayList();
-    int[] places = new int[6];
-    int[] purses  = new int[6];
+
+	final int MAX_PLAYERS = 8;
+    int[] places   = new int[MAX_PLAYERS]; //  initier le tableau plutot à 8 ou alors utiliser une collection (ex: ArrayList)
+    int[] purses  = new int[MAX_PLAYERS]; //  initier le tableau plutot à 8 ou alors utiliser une collection (ex: ArrayList)
     boolean[] inPenaltyBox  = new boolean[6];
     
     LinkedList popQuestions = new LinkedList();
@@ -18,7 +20,7 @@ public class Game {
     boolean isGettingOutOfPenaltyBox;
     
     public  Game(){
-    	for (int i = 0; i < 50; i++) {
+    	for (int i = 0; i < 50; i++) { // que représente la valeur 50 ? la sortir dans une variable en lui donnant un nom significatif
 			popQuestions.addLast("Pop Question " + i);
 			scienceQuestions.addLast(("Science Question " + i));
 			sportsQuestions.addLast(("Sports Question " + i));
@@ -26,15 +28,15 @@ public class Game {
     	}
     }
 
-	public String createRockQuestion(int index){
+	private String createRockQuestion(int index){
 		return "Rock Question " + index;
 	}
 
 	public boolean isPlayable() {
 		return (howManyPlayers() >= 2);
-	}
+	} // supprimer si pas utiliser
 
-	public boolean add(String playerName) {
+	public boolean add(String playerName) { // renommer en addPlayerName pour ne pas confondre avec la méthode add de ArrayList
 		
 		
 	    players.add(playerName);
@@ -47,7 +49,7 @@ public class Game {
 		return true;
 	}
 	
-	public int howManyPlayers() {
+	private int howManyPlayers() {
 		return players.size();
 	}
 
@@ -85,17 +87,19 @@ public class Game {
 	}
 
 	private void askQuestion() {
-		if (currentCategory() == "Pop")
+		String category  = currentCategory();
+		if (("Pop").equals(category))
 			System.out.println(popQuestions.removeFirst());
-		if (currentCategory() == "Science")
+		if ("Science".equals(category))
 			System.out.println(scienceQuestions.removeFirst());
-		if (currentCategory() == "Sports")
+		if ("Sports".equals(category))
 			System.out.println(sportsQuestions.removeFirst());
-		if (currentCategory() == "Rock")
-			System.out.println(rockQuestions.removeFirst());		
+		if ("Rock".equals(category))
+			System.out.println(rockQuestions.removeFirst());
 	}
-	
-	
+
+
+	//utiliser plutot un switch case, mettre la currentCategory dans une variable et ne faire qu'une seule instruction return
 	private String currentCategory() {
 		if (places[currentPlayer] == 0) return "Pop";
 		if (places[currentPlayer] == 4) return "Pop";
@@ -121,9 +125,8 @@ public class Game {
 						+ purses[currentPlayer]
 						+ " Gold Coins.");
 
-				boolean winner = didPlayerWin();
+				return didPlayerWin();
 
-				return winner;
 			} else {
 				currentPlayer++;
 				if (currentPlayer == players.size()) currentPlayer = 0;
