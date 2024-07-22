@@ -1,0 +1,11 @@
+Voici une liste de commentaires sur le code:
+
+1- Utilisation des interfaces au lieu des implementations dans la declaration des lists;
+2- Utilisation des LinkedLinst avec removeLast et addLast ça rappelle le fonctionnement des Queue.
+3- Spliter la fonction handleCorrectAnswer en plusieurs method pour plus de lisibité et moins de redandance de code;
+4- Utilisation des switch au lieu de plusieurs if pour la lisibilité de code et pour regrouper le même traitement pour les cas qui retournent la même chose
+5- Mettre des constant String pour les messages
+6- Utiliser StringBuilder pour les concatenations de plusieurs Strings
+7- Renommer la metthod add à  addPlayer pour un nom plus signifiant
+8- Mettre les nombres magiques dans des constante
+9- Supprimer eventuellement le code mort ( il y a des methodes non utilisées comme createRockQuestion et isPlayable )
